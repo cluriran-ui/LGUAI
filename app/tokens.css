@@ -1,0 +1,101 @@
+/* 자동 생성 파일 — 직접 고치지 않음. 원본: docs/tokens.json */
+/* 다시 만들기: node harness/scripts/build-tokens.mjs */
+@theme {
+  /* Tailwind 기본 색·글자 크기·간격·모서리 끄기 → 토큰 밖 값 사용 불가 */
+  --color-*: initial;
+  --text-*: initial;
+  --spacing-*: initial;
+  --radius-*: initial;
+
+  /* color */
+  --color-fill-accent: #E6007E; /* fill/accent */
+  --color-text-accent: #FF2E98; /* text/accent */
+  --color-icon-accent: #FF2E98; /* icon/accent */
+  --color-text-primary: #181A1B; /* text/primary */
+  --color-text-secondary: #66707A; /* text/secondary */
+  --color-text-tertiary: #878787; /* text/tertiary */
+  --color-text-on-dark: #FFFFFF; /* text/on-dark */
+  --color-text-error: #E30036; /* text/error */
+  --color-text-placeholder: #B7BDC4; /* text/placeholder */
+  --color-text-on-disabled: #66707A; /* text/on-disabled */
+  --color-bg-surface: #FFFFFF; /* bg/surface */
+  --color-bg-default: #F7F7F7; /* bg/default */
+  --color-bg-subtle: #EFF1F3; /* bg/subtle */
+  --color-bg-inverse: #2D2D2D; /* bg/inverse */
+  --color-bg-accent-subtle: #FFF5FA; /* bg/accent-subtle */
+  --color-bg-error-subtle: #FFF0F3; /* bg/error-subtle */
+  --color-border-default: #D9DCE0; /* border/default */
+  --color-border-subtle: #EFF1F3; /* border/subtle */
+  --color-border-strong: #181A1B; /* border/strong */
+  --color-border-divider: #0000001A; /* border/divider */
+  --color-border-focus: #FF2E98; /* border/focus */
+  --color-border-error: #E30036; /* border/error */
+  --color-fill-primary: #FF2E98; /* fill/primary */
+  --color-fill-secondary: #181A1B; /* fill/secondary */
+  --color-fill-tertiary: #EFF1F3; /* fill/tertiary */
+  --color-fill-disabled: #D9DCE0; /* fill/disabled */
+  --color-fill-disabled-strong: #B7BDC4; /* fill/disabled-strong */
+  --color-fill-primary-hover: #E6007E; /* fill/primary-hover */
+  --color-icon-default: #66707A; /* icon/default */
+  --color-icon-strong: #181A1B; /* icon/strong */
+  --color-border-medium: #66707A; /* border/medium */
+  --color-surface-default: #FFFFFF; /* surface/default */
+  --color-icon-on-dark: #FFFFFF; /* icon/on-dark */
+  --color-icon-disabled: #D9DCE0; /* icon/disabled */
+  --color-icon-error: #E30036; /* icon/error */
+  --color-icon-primary: #000000; /* icon/primary */
+  --color-brand-primary: #FF2E98; /* brand/primary */
+  --color-effect-shadow-subtle: #0000000D; /* effect/shadow-subtle */
+
+  /* font */
+  --font-sans: "Noto Sans KR", sans-serif; /* font-family/family-font */
+
+  /* text */
+  --text-heading-h1: 32px; /* font-size/heading-h1 */
+  --text-heading-h2: 28px; /* font-size/heading-h2 */
+  --text-heading-h3: 24px; /* font-size/heading-h3 */
+  --text-heading-h4: 20px; /* font-size/heading-h4 */
+  --text-subtitle: 18px; /* font-size/subtitle */
+  --text-body: 16px; /* font-size/body */
+  --text-body-small: 14px; /* font-size/body-small */
+  --text-caption: 13px; /* font-size/caption */
+  --text-caption-mini: 10px; /* font-size/caption-mini */
+  --text-12: 12px; /* font-size/12 */
+
+  /* spacing */
+  --spacing-4: 4px; /* spacing/4 */
+  --spacing-8: 8px; /* spacing/8 */
+  --spacing-12: 12px; /* spacing/12 */
+  --spacing-16: 16px; /* spacing/16 */
+  --spacing-20: 20px; /* spacing/20 */
+  --spacing-24: 24px; /* spacing/24 */
+  --spacing-32: 32px; /* spacing/32 */
+  --spacing-40: 40px; /* spacing/40 */
+  --spacing-48: 48px; /* spacing/48 */
+  --spacing-80: 80px; /* spacing/80 */
+  --spacing-10: 10px; /* spacing/10 */
+  --spacing-0: 0px; /* spacing/0 */
+  --spacing-2: 2px; /* spacing/2 */
+  --spacing-6: 6px; /* spacing/6 */
+  --spacing-56: 56px; /* spacing/56 */
+  --spacing-64: 64px; /* spacing/64 */
+  --spacing-28: 28px; /* spacing/28 */
+  --spacing-60: 60px; /* spacing/60 */
+
+  /* radius */
+  --radius-4: 4px; /* radius/4 */
+  --radius-8: 8px; /* radius/8 */
+  --radius-12: 12px; /* radius/12 */
+  --radius-16: 16px; /* radius/16 */
+  --radius-20: 20px; /* radius/20 */
+  --radius-24: 24px; /* radius/24 */
+  --radius-32: 32px; /* radius/32 */
+  --radius-full: 9999px; /* radius/full */
+  --radius-2: 2px; /* radius/2 */
+  --radius-0: 0px; /* radius/0 */
+  --radius-5: 5px; /* radius/5 */
+  --radius-6: 6px; /* radius/6 */
+  --radius-999: 999px; /* radius/999 */
+  --radius-10: 10px; /* radius/10 */
+  --radius-40: 40px; /* radius/40 */
+}
