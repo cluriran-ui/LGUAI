@@ -63,7 +63,7 @@
     "consent_notice": "동의 전 처음부터 표시 + 비활성 버튼 누르면 안내로 이동 (사용자 결정)",
     "order_number": "YYYY-MMDD-NNNN (사용자 결정)"
   },
-  "waiting_for": null,
+  "waiting_for": "사람: 6단계 승인 (재작업 2)",
   "rework": {
     "from_step": 4,
     "reason": "사용자 요청: 신청 번호 형식, 동의 안내 시점",
@@ -81,6 +81,22 @@
         "status": "approved",
         "by": "사람",
         "at": "2026-10-21"
+      }
+    }
+  },
+  "rework2": {
+    "from_step": 4,
+    "reason": "사용자 요청: / 리다이렉트 dev 로그 오류",
+    "steps": {
+      "4": {
+        "status": "pass",
+        "commit": "0451899",
+        "fix": "app/page.tsx instant = false"
+      },
+      "5": {
+        "status": "pass",
+        "verify_ran_at": "2026-10-21T07:28:40.891Z",
+        "note": "직전 실행(07:11:30Z) G8 규칙 6 1회 실패 → 단독 재실행 3/3 통과, 스크립트 변경 없이 재검증 통과 (사용자 결정). ui-check 화면 이동 대기 불안정 가능성 있음"
       }
     }
   }
