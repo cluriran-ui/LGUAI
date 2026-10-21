@@ -9,8 +9,10 @@ import Button from "../../_components/Button";
 import { plans, findPlan, formatWon, priceAfterText, applyHref } from "../../_data/plans";
 
 // 2. 요금제 상세 (/plans/[id]) — PRD 4-2
-// 4개 요금제(p01 ~ p04)만 미리 만들고, 그 밖의 id는 404
-export const dynamicParams = false;
+// 4개 요금제(p01 ~ p04)만 미리 만들고, 그 밖의 id는 notFound()로 404
+// cacheComponents 환경에서는 dynamicParams를 쓸 수 없음 (Next 16 문서: migrating-to-cache-components)
+// 'navigation': 목록에 없는 id도 전체 결과를 다 만든 뒤 응답 → notFound()가 스트리밍 전에 실행되어 404 상태로 나감
+export const ensureStatic = "navigation";
 
 type Props = { params: Promise<{ id: string }> };
 

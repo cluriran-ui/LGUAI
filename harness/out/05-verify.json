@@ -1,0 +1,69 @@
+{
+  "ran_at": "2026-10-21T06:13:33.243Z",
+  "command": "node harness/scripts/verify.mjs",
+  "all_pass": true,
+  "summary": {
+    "G4": "pass",
+    "G5": "pass",
+    "G6": "pass",
+    "G7": "pass",
+    "G8": "pass",
+    "G9": "pass"
+  },
+  "results": [
+    {
+      "gate": "G4",
+      "title": "라우트 수",
+      "status": "pass",
+      "violation_count": 0,
+      "violations": [],
+      "expected": 4,
+      "actual": 4
+    },
+    {
+      "gate": "G5",
+      "title": "토큰 밖 값",
+      "status": "pass",
+      "violation_count": 0,
+      "violations": []
+    },
+    {
+      "gate": "G6",
+      "title": "build·lint",
+      "status": "pass",
+      "violation_count": 0,
+      "violations": [],
+      "commands": [
+        {
+          "cmd": "npm run build",
+          "exit_code": 0
+        },
+        {
+          "cmd": "npm run lint",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "gate": "G7",
+      "title": "어기면 안 되는 것 A·B",
+      "status": "pass",
+      "violation_count": 0,
+      "violations": []
+    },
+    {
+      "gate": "G8",
+      "title": "PRD 규칙 1·2·6·7",
+      "status": "pass",
+      "violation_count": 0,
+      "violations": []
+    },
+    {
+      "gate": "G9",
+      "title": "개인정보",
+      "status": "pass",
+      "violation_count": 0,
+      "violations": []
+    }
+  ]
+}
