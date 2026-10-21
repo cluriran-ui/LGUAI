@@ -1,7 +1,12 @@
 {
   "last_passed_step": 5,
   "steps": {
-    "1": { "status": "pass", "gate": "G1", "commit": "74e7f68", "at": "2026-10-21" },
+    "1": {
+      "status": "pass",
+      "gate": "G1",
+      "commit": "74e7f68",
+      "at": "2026-10-21"
+    },
     "2": {
       "status": "pass",
       "gate": "G2",
@@ -9,17 +14,40 @@
       "commit": "56a1276",
       "at": "2026-10-21"
     },
-    "3": { "status": "pass", "gate": "G3", "commit": "0381628", "tokens": 82, "at": "2026-10-21" },
-    "4": { "status": "pass", "gate": "G4·G5", "commit": "b317435", "at": "2026-10-21" },
+    "3": {
+      "status": "pass",
+      "gate": "G3",
+      "commit": "0381628",
+      "tokens": 82,
+      "at": "2026-10-21"
+    },
+    "4": {
+      "status": "pass",
+      "gate": "G4·G5",
+      "commit": "b317435",
+      "at": "2026-10-21"
+    },
     "5": {
       "status": "pass",
       "gate": "G4 ~ G9",
       "verify_ran_at": "2026-10-21T06:13:33.243Z",
-      "commit": "이 커밋 ([하네스] 5단계 검증 통과)",
+      "commit": "9bfef0d",
+      "at": "2026-10-21"
+    },
+    "5+": {
+      "status": "pass",
+      "gate": "G6 재실행 (+G5·G9)",
+      "comments": 34,
+      "needs_check": 5,
+      "commit": "이 커밋 ([하네스] 5+단계 기획 주석 통과)",
       "at": "2026-10-21"
     }
   },
-  "retries": { "G6": 1 },
-  "decisions": { "recommended_plan": "p02 (사용자 결정)" },
-  "waiting_for": "사람: /planner-comments app 실행 → 이후 G6 재실행 → 6단계 승인"
+  "retries": {
+    "G6": 1
+  },
+  "decisions": {
+    "recommended_plan": "p02 (사용자 결정)"
+  },
+  "waiting_for": "사람: 6단계 승인 (스크린샷 4장 + Figma 시안 대조)"
 }

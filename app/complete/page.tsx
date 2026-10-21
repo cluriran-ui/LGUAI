@@ -1,3 +1,5 @@
+// [기획] 신청 완료 화면의 바깥 틀: 실제 화면은 CompleteView.tsx에 있음
+// [기획] 관련: PRD 4-4 · screens.md 신청 완료 · US5
 import type { Metadata } from "next";
 import CompleteView from "./CompleteView";
 

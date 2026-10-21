@@ -1,3 +1,5 @@
+// [기획] 구독 신청 화면의 바깥 틀: 실제 입력 화면은 ApplyForm.tsx에 있음
+// [기획] 관련: PRD 4-3 · screens.md 구독 신청 · US4·US5
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Header from "../_components/Header";

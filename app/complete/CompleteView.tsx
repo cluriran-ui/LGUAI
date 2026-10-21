@@ -1,3 +1,5 @@
+// [기획] 신청 완료 화면: 방금 저장한 신청 내역을 보여줌. 이 화면이 신청 흐름의 끝임
+// [기획] 관련: PRD 4-4 · screens.md 신청 완료 · US5 · 들어오는 곳: 구독 신청 · 나가는 곳: 확인 필요
 "use client";
 
 import { useMemo, useSyncExternalStore } from "react";
@@ -39,6 +41,7 @@ export default function CompleteView() {
   const plan = findPlan(sub?.plan_id);
 
   // 확인 필요: 신청 완료 화면 뒤로(icon/arrowLeft) 이동 목적지 (기준 흐름에 미정의) → backHref 없이 아이콘만 표시
+  // [기획][확인 필요] 뒤로 아이콘은 보이지만 눌러도 이동하지 않음 (가는 곳이 기준 흐름에 없음)
   const header = <Header title="신청 완료" />;
 
   if (raw === undefined) {
@@ -76,6 +79,7 @@ export default function CompleteView() {
           <h2 id="complete-detail-title" className="text-subtitle font-semibold text-text-primary">
             신청 내역
           </h2>
+          {/* [기획] 신청 내역: 신청 번호·요금제 이름·매달 내는 금액·신청 일시·신청자 이름. 금액은 신청한 요금제와 같음 (PRD 4-4 · 판정 규칙 7) */}
           <dl className="flex flex-col">
             <ListRow label="신청 번호" value={sub.id} />
             <ListRow label="요금제 이름" value={plan.name} valueTestId="complete-plan-name" />
@@ -95,6 +99,7 @@ export default function CompleteView() {
 
       <BottomCTA>
         {/* 확인 필요: 신청 완료 화면 '요금제 더 보기' 버튼 이동 목적지 (기준 흐름에 미정의) → 이동 없음 */}
+        {/* [기획][확인 필요] '요금제 더 보기' 버튼은 눌러도 이동하지 않음 (가는 곳이 기준 흐름에 없음) */}
         <Button fullWidth>요금제 더 보기</Button>
       </BottomCTA>
     </>

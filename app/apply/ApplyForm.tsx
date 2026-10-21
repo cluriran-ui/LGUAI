@@ -1,3 +1,5 @@
+// [기획] 구독 신청 화면: 이름·휴대폰 번호·동의를 받아 신청 1건을 저장하고 신청 완료로 이동함
+// [기획] 관련: PRD 4-3 · screens.md 구독 신청 · US4·US5 · 들어오는 곳: 요금제 상세 · 나가는 곳: 신청 완료, 요금제 상세
 "use client";
 
 import { useState } from "react";
@@ -12,6 +14,7 @@ import { findPlan, formatWon, priceAfterText, detailHref, COMPLETE_ROUTE } from 
 import { saveSubscription, isPhoneValid } from "../_data/subscription";
 
 // PRD 4-3 오류 상황과 안내 문구 (문구 그대로 사용)
+// [기획] 안내 문구 4개: PRD 4-3 오류 상황 표의 문구를 그대로 씀
 const MSG = {
   name: "이름을 입력해 주세요.",
   phone: "휴대폰 번호 11자리를 숫자로 입력해 주세요.",
@@ -31,6 +34,7 @@ export default function ApplyForm() {
   const [saveFailed, setSaveFailed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
+  // [기획] 어떤 요금제를 신청하는지 모를 때: 요금제 목록으로 가는 버튼만 보여줌
   if (!plan) {
     // 확인 필요: 쿼리 plan이 없거나 잘못된 경우의 처리 (PRD·screens.md에 정의되지 않음)
     // 정해지기 전까지 요금제 목록으로 가는 안내만 둠. 뒤로 이동 목적지도 비워 둠
@@ -49,10 +53,12 @@ export default function ApplyForm() {
 
   const nameValid = name.trim().length > 0;
   const phoneValid = isPhoneValid(phone);
+  // [기획] 신청하기 버튼은 이름·휴대폰 번호 11자리·동의를 모두 채워야 눌림 (PRD 4-3 · 판정 규칙 6)
   const canSubmit = nameValid && phoneValid && agreed && !submitting;
 
   const nameError = touched.name && !nameValid ? MSG.name : null;
   const phoneError = touched.phone && !phoneValid ? MSG.phone : null;
+  // [기획][확인 필요] PRD는 "동의 없이 신청 시도" 때 안내하지만, 버튼이 안 눌려서 동의를 해제할 때 안내함
   // 버튼이 비활성이라 '동의 없이 신청 시도'는 동의를 해제했을 때 안내함
   const agreeError = touched.agree && !agreed ? MSG.agree : null;
 
@@ -84,9 +90,11 @@ export default function ApplyForm() {
   return (
     <>
       {/* 확인 필요: 구독 신청 화면에서 뒤로 이동 시 입력값 유지 여부 (지금은 유지하지 않음) */}
+      {/* [기획] 제목줄: 뒤로 아이콘을 누르면 요금제 상세로 돌아감 (PRD 4-3 · flow.png) */}
       <Header title="구독 신청" backHref={detailHref(plan.id)} />
 
       <main className="flex flex-1 flex-col gap-24 p-24">
+        {/* [기획] 선택한 요금제 요약: 이름·매달 내는 금액, 할인 있는 p03만 할인 종료 후 금액 (PRD 4-3 · US4) */}
         <section aria-labelledby="apply-summary-title" className="flex flex-col gap-12">
           <h2 id="apply-summary-title" className="text-subtitle font-semibold text-text-primary">
             선택한 요금제
@@ -101,6 +109,7 @@ export default function ApplyForm() {
 
         {/* 확인 필요: 신청 안내 문구(신청 내용 확인·자동 갱신 안내) 사용 여부. PRD에 없어 비워 둠 */}
 
+        {/* [기획] 신청 정보 입력: 이름, 휴대폰 번호, 개인정보 수집·이용 동의 (PRD 4-3 · US5) */}
         <section aria-labelledby="apply-form-title" className="flex flex-col gap-16">
           <h2 id="apply-form-title" className="text-subtitle font-semibold text-text-primary">
             신청 정보
@@ -158,6 +167,7 @@ export default function ApplyForm() {
         </section>
       </main>
 
+      {/* [기획] 하단 버튼: '신청하기'는 저장 후 신청 완료로, '취소'는 요금제 상세로 감. 저장 실패 문구는 버튼 위 (PRD 4-3) */}
       <BottomCTA>
         {saveFailed && (
           <p role="alert" className="text-body-small font-medium text-text-error">
