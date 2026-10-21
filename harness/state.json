@@ -39,13 +39,12 @@
       "by": "사람",
       "evidence": ".temp/compare/index.html (Figma 4장 vs 구현 4장)",
       "open_items": [
-        "신청 번호 형식(두 줄 꺾임)",
-        "동의 안내 문구 시점",
         "버튼 xl 높이 52 토큰 없음",
         "최대 너비 390 토큰 없음",
         "줄높이 토큰 없음"
       ],
-      "at": "2026-10-21"
+      "at": "2026-10-21",
+      "commit": "9055ef3"
     },
     "5+": {
       "status": "pass",
@@ -60,7 +59,29 @@
     "G6": 1
   },
   "decisions": {
-    "recommended_plan": "p02 (사용자 결정)"
+    "recommended_plan": "p02 (사용자 결정)",
+    "consent_notice": "동의 전 처음부터 표시 + 비활성 버튼 누르면 안내로 이동 (사용자 결정)",
+    "order_number": "YYYY-MMDD-NNNN (사용자 결정)"
   },
-  "waiting_for": null
+  "waiting_for": null,
+  "rework": {
+    "from_step": 4,
+    "reason": "사용자 요청: 신청 번호 형식, 동의 안내 시점",
+    "steps": {
+      "4": {
+        "status": "pass",
+        "commit": "b4f6528"
+      },
+      "5": {
+        "status": "pass",
+        "commit": "440c85e",
+        "verify_ran_at": "2026-10-21T06:36:23.965Z"
+      },
+      "6": {
+        "status": "approved",
+        "by": "사람",
+        "at": "2026-10-21"
+      }
+    }
+  }
 }
