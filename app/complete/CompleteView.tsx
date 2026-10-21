@@ -81,7 +81,7 @@ export default function CompleteView() {
           </h2>
           {/* [기획] 신청 내역: 신청 번호·요금제 이름·매달 내는 금액·신청 일시·신청자 이름. 금액은 신청한 요금제와 같음 (PRD 4-4 · 판정 규칙 7) */}
           <dl className="flex flex-col">
-            <ListRow label="신청 번호" value={sub.id} />
+            <ListRow label="신청 번호" value={sub.id} noWrap />
             <ListRow label="요금제 이름" value={plan.name} valueTestId="complete-plan-name" />
             <ListRow
               label="매달 내는 금액"

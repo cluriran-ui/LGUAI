@@ -2,7 +2,7 @@
 // [기획] 관련: PRD 4-3 · screens.md 구독 신청 · US4·US5 · 들어오는 곳: 요금제 상세 · 나가는 곳: 신청 완료, 요금제 상세
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "../_components/Header";
 import ListRow from "../_components/ListRow";
@@ -33,6 +33,7 @@ export default function ApplyForm() {
   const [touched, setTouched] = useState({ name: false, phone: false, agree: false });
   const [saveFailed, setSaveFailed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const agreeMsgRef = useRef<HTMLParagraphElement>(null);
 
   // [기획] 어떤 요금제를 신청하는지 모를 때: 요금제 목록으로 가는 버튼만 보여줌
   if (!plan) {
@@ -60,9 +61,24 @@ export default function ApplyForm() {
   const phoneError = touched.phone && !phoneValid ? MSG.phone : null;
   // [기획][확인 필요] PRD는 "동의 없이 신청 시도" 때 안내하지만, 버튼이 안 눌려서 동의를 해제할 때 안내함
   // 버튼이 비활성이라 '동의 없이 신청 시도'는 동의를 해제했을 때 안내함
-  const agreeError = touched.agree && !agreed ? MSG.agree : null;
+  // [기획] 사용자 결정: 동의 전에는 처음부터 안내, 비활성 버튼을 누르면 안내로 이동
+  const agreeError = !agreed ? MSG.agree : null;
 
   const after = priceAfterText(plan);
+
+  // 비활성 '신청하기'를 누르려 할 때: 버튼은 disabled 그대로 두고, 안내 문구로 시선을 옮김 (신청은 일어나지 않음)
+  function handleBlockedPress() {
+    if (!agreed) {
+      const el = agreeMsgRef.current;
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+      el?.focus({ preventScroll: true });
+      return;
+    }
+    // 동의는 했지만 다른 입력이 모자랄 때: 해당 입력란 안내를 보여주고 첫 빈칸으로 이동
+    setTouched((t) => ({ ...t, name: true, phone: true }));
+    const target = !nameValid ? "apply-name" : !phoneValid ? "apply-phone" : null;
+    if (target) document.getElementById(target)?.focus();
+  }
 
   function handleSubmit() {
     if (!nameValid || !phoneValid || !agreed || !plan) {
@@ -159,7 +175,13 @@ export default function ApplyForm() {
               개인정보 수집·이용 동의 (필수)
             </Checkbox>
             {agreeError && (
-              <p id="apply-agree-error" role="alert" className="text-body-small font-medium text-text-error">
+              <p
+                id="apply-agree-error"
+                ref={agreeMsgRef}
+                tabIndex={-1}
+                aria-live="polite"
+                className="text-body-small font-medium text-text-error"
+              >
                 {agreeError}
               </p>
             )}
@@ -174,9 +196,15 @@ export default function ApplyForm() {
             {MSG.save}
           </p>
         )}
-        <Button fullWidth disabled={!canSubmit} onClick={handleSubmit} testId="btn-submit">
-          신청하기
-        </Button>
+        {/* 비활성일 때만 버튼 위에 투명한 덮개를 두어 누르려는 동작을 받음. 버튼 자체는 disabled 유지 (규칙 6) */}
+        <div className="relative flex flex-col">
+          <Button fullWidth disabled={!canSubmit} onClick={handleSubmit} testId="btn-submit">
+            신청하기
+          </Button>
+          {!canSubmit && !submitting && (
+            <span aria-hidden="true" className="absolute inset-0 cursor-not-allowed" onClick={handleBlockedPress} />
+          )}
+        </div>
         <Button href={detailHref(plan.id)} variant="Secondary" fullWidth>
           취소
         </Button>
