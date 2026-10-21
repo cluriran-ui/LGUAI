@@ -1,0 +1,102 @@
+{
+  "source": "docs/PRD.md",
+  "screens": [
+    { "no": 1, "name": "요금제 목록", "route": "/plans" },
+    { "no": 2, "name": "요금제 상세", "route": "/plans/[id]" },
+    { "no": 3, "name": "구독 신청", "route": "/apply" },
+    { "no": 4, "name": "신청 완료", "route": "/complete" }
+  ],
+  "entry_route": "/plans",
+  "plans": [
+    {
+      "id": "p01",
+      "name": "슬림 10GB",
+      "monthly_price": 39000,
+      "price_after_discount": null,
+      "throttle_text": "소진 후 1Mbps로 제한",
+      "has_unlimited_name": false,
+      "description": "출퇴근 영상 시청이 적은 고객용 기본 요금제"
+    },
+    {
+      "id": "p02",
+      "name": "데일리 50GB",
+      "monthly_price": 52000,
+      "price_after_discount": null,
+      "throttle_text": "소진 후 1Mbps로 제한",
+      "has_unlimited_name": false,
+      "description": "출퇴근길 영상을 월말까지 보고 싶은 고객용"
+    },
+    {
+      "id": "p03",
+      "name": "무제한 라이트",
+      "monthly_price": 59000,
+      "price_after_discount": 69000,
+      "throttle_text": "소진 후 5Mbps로 제한",
+      "has_unlimited_name": true,
+      "description": "이름은 무제한이지만 기본 데이터 소진 후 속도가 제한됨"
+    },
+    {
+      "id": "p04",
+      "name": "무제한 프리",
+      "monthly_price": 75000,
+      "price_after_discount": null,
+      "throttle_text": "속도 제한 없음",
+      "has_unlimited_name": true,
+      "description": "데이터를 다 써도 속도 제한이 없는 요금제"
+    }
+  ],
+  "rules": [
+    { "no": 1, "text": "요금제 목록에 요금제 카드가 정확히 4개(p01~p04) 있다.", "gate": "G8" },
+    { "no": 2, "text": "추천 Tag는 요금제 목록에 1개만 있다.", "gate": "G8" },
+    { "no": 3, "text": "요금제 카드와 요금제 상세에는 금액이 \"매달 내는 금액\" 1개와 \"할인 종료 후 금액\" 최대 1개만 있다. 정가·할인가·프로모션가 3개가 함께 표시되지 않는다.", "gate": "G7" },
+    { "no": 4, "text": "할인 종료 후 금액은 24개월 할인이 있는 요금제(p03)에만 있다.", "gate": "G7" },
+    { "no": 5, "text": "이름에 \"무제한\"이 들어간 요금제(p03, p04)의 카드와 상세에는 \"소진 후 ○Mbps로 제한\" 또는 \"속도 제한 없음\" 중 하나가 있다.", "gate": "G7" },
+    { "no": 6, "text": "구독 신청 화면에서 이름·휴대폰 번호가 비어 있거나 동의가 체크되지 않으면 '신청하기' 버튼이 눌리지 않는다.", "gate": "G8" },
+    { "no": 7, "text": "신청 완료 화면의 요금제 이름과 매달 내는 금액이 구독 신청 화면에서 선택한 요금제와 같다.", "gate": "G8" }
+  ],
+  "must_not": {
+    "A": { "title": "가격 혼동 금지", "rules": [3, 4], "gate": "G7" },
+    "B": { "title": "\"무제한\" 혼동 금지", "rules": [5], "gate": "G7" }
+  },
+  "params": {
+    "card_count": 4,
+    "recommend_tag_count": 1,
+    "max_amounts_per_unit": 2,
+    "price_after_only": ["p03"],
+    "throttle_required": ["p03", "p04"],
+    "throttle_patterns": ["소진 후 \\d+(?:\\.\\d+)?Mbps로 제한", "속도 제한 없음"],
+    "amount_pattern": "\\d{1,3}(?:,\\d{3})+원",
+    "detail_route": "/plans/{id}",
+    "apply_route": "/apply?plan={id}",
+    "complete_route": "/complete",
+    "apply_test_plan": "p03"
+  },
+  "testids": {
+    "plan_card": "plan-card",
+    "tag_recommend": "tag-recommend",
+    "throttle": "throttle",
+    "price_monthly": "price-monthly",
+    "price_after": "price-after",
+    "btn_detail": "btn-detail",
+    "btn_go_apply": "btn-go-apply",
+    "input_name": "input-name",
+    "input_phone": "input-phone",
+    "check_agree": "check-agree",
+    "btn_submit": "btn-submit",
+    "complete_plan_name": "complete-plan-name",
+    "complete_monthly_price": "complete-monthly-price"
+  },
+  "unresolved": [
+    "신청 완료 화면 뒤로(icon/arrowLeft) 이동 목적지 (기준 흐름에 미정의)",
+    "신청 완료 화면 '요금제 더 보기' 버튼 이동 목적지 (기준 흐름에 미정의)",
+    "요금제 목록 기본 정렬 (실습에서는 매달 내는 금액이 낮은 순으로 둠)",
+    "요금제 필터 칩 항목 (예: 데이터량 구간, 속도 제한 여부)",
+    "추천 Tag 대상 요금제와 추천 기준 (Plan.recommended 값)",
+    "요금제 목록 로딩·빈·에러 상태 (screens.md에 정의되지 않음)",
+    "요금제 상세 기본 제공 항목 중 통화·문자 등 그 밖의 행",
+    "요금제 상세 포함 혜택(OptionItem) 내용 (확정 전까지 영역을 비워 둠)",
+    "요금제 상세 로딩·빈·에러 상태 (screens.md에 정의되지 않음)",
+    "구독 신청 화면에서 뒤로 이동 시 입력값 유지 여부",
+    "신청 완료 로딩·빈·에러 상태 (screens.md에 정의되지 않음)"
+  ]
+}
