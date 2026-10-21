@@ -1,5 +1,5 @@
 {
-  "last_passed_step": 5,
+  "last_passed_step": 6,
   "steps": {
     "1": {
       "status": "pass",
@@ -34,12 +34,25 @@
       "commit": "9bfef0d",
       "at": "2026-10-21"
     },
+    "6": {
+      "status": "approved",
+      "by": "사람",
+      "evidence": ".temp/compare/index.html (Figma 4장 vs 구현 4장)",
+      "open_items": [
+        "신청 번호 형식(두 줄 꺾임)",
+        "동의 안내 문구 시점",
+        "버튼 xl 높이 52 토큰 없음",
+        "최대 너비 390 토큰 없음",
+        "줄높이 토큰 없음"
+      ],
+      "at": "2026-10-21"
+    },
     "5+": {
       "status": "pass",
       "gate": "G6 재실행 (+G5·G9)",
       "comments": 34,
       "needs_check": 5,
-      "commit": "이 커밋 ([하네스] 5+단계 기획 주석 통과)",
+      "commit": "2408689",
       "at": "2026-10-21"
     }
   },
@@ -49,5 +62,5 @@
   "decisions": {
     "recommended_plan": "p02 (사용자 결정)"
   },
-  "waiting_for": "사람: 6단계 승인 (스크린샷 4장 + Figma 시안 대조)"
+  "waiting_for": null
 }
