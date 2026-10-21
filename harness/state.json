@@ -1,14 +1,15 @@
 {
-  "last_passed_step": 2,
+  "last_passed_step": 3,
   "steps": {
     "1": { "status": "pass", "gate": "G1", "commit": "74e7f68", "at": "2026-10-21" },
     "2": {
       "status": "pass",
       "gate": "G2",
       "reused": "docs/screen-spec.md (ce0ed2a, 16/16칸)",
-      "commit": "이 커밋 ([하네스] 2단계 페이지 나누기 통과)",
+      "commit": "56a1276",
       "at": "2026-10-21"
-    }
+    },
+    "3": { "status": "pass", "gate": "G3", "commit": "0381628", "tokens": 82, "at": "2026-10-21" }
   },
   "retries": {},
   "waiting_for": null

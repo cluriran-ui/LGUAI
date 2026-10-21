@@ -1,0 +1,176 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Header from "../_components/Header";
+import ListRow from "../_components/ListRow";
+import Input from "../_components/Input";
+import Checkbox from "../_components/Checkbox";
+import BottomCTA from "../_components/BottomCTA";
+import Button from "../_components/Button";
+import { findPlan, formatWon, priceAfterText, detailHref, COMPLETE_ROUTE } from "../_data/plans";
+import { saveSubscription, isPhoneValid } from "../_data/subscription";
+
+// PRD 4-3 오류 상황과 안내 문구 (문구 그대로 사용)
+const MSG = {
+  name: "이름을 입력해 주세요.",
+  phone: "휴대폰 번호 11자리를 숫자로 입력해 주세요.",
+  agree: "개인정보 수집·이용에 동의해야 신청할 수 있어요.",
+  save: "신청을 저장하지 못했어요. 다시 시도해 주세요.",
+} as const;
+
+export default function ApplyForm() {
+  const router = useRouter();
+  const plan = findPlan(useSearchParams().get("plan"));
+
+  // 기본 상태: 두 입력란 비어 있음, 동의 체크 안 됨
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [touched, setTouched] = useState({ name: false, phone: false, agree: false });
+  const [saveFailed, setSaveFailed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  if (!plan) {
+    // 확인 필요: 쿼리 plan이 없거나 잘못된 경우의 처리 (PRD·screens.md에 정의되지 않음)
+    // 정해지기 전까지 요금제 목록으로 가는 안내만 둠. 뒤로 이동 목적지도 비워 둠
+    return (
+      <>
+        <Header title="구독 신청" />
+        <main className="flex flex-1 flex-col gap-16 p-24">
+          <p className="text-body font-medium text-text-primary">신청할 요금제를 찾지 못했어요.</p>
+          <Button href="/plans" variant="Secondary" size="lg">
+            요금제 목록 보기
+          </Button>
+        </main>
+      </>
+    );
+  }
+
+  const nameValid = name.trim().length > 0;
+  const phoneValid = isPhoneValid(phone);
+  const canSubmit = nameValid && phoneValid && agreed && !submitting;
+
+  const nameError = touched.name && !nameValid ? MSG.name : null;
+  const phoneError = touched.phone && !phoneValid ? MSG.phone : null;
+  // 버튼이 비활성이라 '동의 없이 신청 시도'는 동의를 해제했을 때 안내함
+  const agreeError = touched.agree && !agreed ? MSG.agree : null;
+
+  const after = priceAfterText(plan);
+
+  function handleSubmit() {
+    if (!nameValid || !phoneValid || !agreed || !plan) {
+      setTouched({ name: true, phone: true, agree: true });
+      return;
+    }
+    setSubmitting(true);
+    setSaveFailed(false);
+    try {
+      saveSubscription({
+        name: name.trim(),
+        phone,
+        plan_id: plan.id,
+        monthly_price: plan.monthly_price,
+        agreed_privacy: true,
+      });
+    } catch {
+      setSaveFailed(true);
+      setSubmitting(false);
+      return;
+    }
+    router.push(COMPLETE_ROUTE);
+  }
+
+  return (
+    <>
+      {/* 확인 필요: 구독 신청 화면에서 뒤로 이동 시 입력값 유지 여부 (지금은 유지하지 않음) */}
+      <Header title="구독 신청" backHref={detailHref(plan.id)} />
+
+      <main className="flex flex-1 flex-col gap-24 p-24">
+        <section aria-labelledby="apply-summary-title" className="flex flex-col gap-12">
+          <h2 id="apply-summary-title" className="text-subtitle font-semibold text-text-primary">
+            선택한 요금제
+          </h2>
+          <dl className="flex flex-col">
+            <ListRow label="요금제" value={plan.name} />
+            <ListRow label="매달 내는 금액" value={`월 ${formatWon(plan.monthly_price)}`} />
+            {/* 할인 종료 후 금액: 할인 있는 요금제(p03)만. 없으면 줄 자체를 숨김 */}
+            {after && <ListRow label="할인 종료 후 금액" value={after} />}
+          </dl>
+        </section>
+
+        {/* 확인 필요: 신청 안내 문구(신청 내용 확인·자동 갱신 안내) 사용 여부. PRD에 없어 비워 둠 */}
+
+        <section aria-labelledby="apply-form-title" className="flex flex-col gap-16">
+          <h2 id="apply-form-title" className="text-subtitle font-semibold text-text-primary">
+            신청 정보
+          </h2>
+          <Input
+            id="apply-name"
+            label="이름"
+            value={name}
+            placeholder="이름 입력"
+            autoComplete="name"
+            testId="input-name"
+            errorMessage={nameError}
+            onChange={(e) => {
+              setName(e.target.value);
+              setSaveFailed(false);
+            }}
+            onBlur={() => setTouched((t) => ({ ...t, name: true }))}
+          />
+          <Input
+            id="apply-phone"
+            label="휴대폰 번호"
+            type="tel"
+            inputMode="numeric"
+            value={phone}
+            placeholder="숫자 11자리"
+            autoComplete="tel"
+            testId="input-phone"
+            errorMessage={phoneError}
+            onChange={(e) => {
+              setPhone(e.target.value);
+              setSaveFailed(false);
+            }}
+            onBlur={() => setTouched((t) => ({ ...t, phone: true }))}
+          />
+          <div className="flex flex-col gap-8">
+            <Checkbox
+              id="apply-agree"
+              checked={agreed}
+              testId="check-agree"
+              describedBy={agreeError ? "apply-agree-error" : undefined}
+              onChange={(checked) => {
+                setAgreed(checked);
+                setTouched((t) => ({ ...t, agree: true }));
+                setSaveFailed(false);
+              }}
+            >
+              개인정보 수집·이용 동의 (필수)
+            </Checkbox>
+            {agreeError && (
+              <p id="apply-agree-error" role="alert" className="text-body-small font-medium text-text-error">
+                {agreeError}
+              </p>
+            )}
+          </div>
+        </section>
+      </main>
+
+      <BottomCTA>
+        {saveFailed && (
+          <p role="alert" className="text-body-small font-medium text-text-error">
+            {MSG.save}
+          </p>
+        )}
+        <Button fullWidth disabled={!canSubmit} onClick={handleSubmit} testId="btn-submit">
+          신청하기
+        </Button>
+        <Button href={detailHref(plan.id)} variant="Secondary" fullWidth>
+          취소
+        </Button>
+      </BottomCTA>
+    </>
+  );
+}
